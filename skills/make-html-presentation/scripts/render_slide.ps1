@@ -9,7 +9,9 @@ param(
     [string]$OutPath,
 
     [int]$Width = 1600,
-    [int]$Height = 900
+    [int]$Height = 900,
+
+    [string]$BrowserPath = $env:BROWSER_PATH
 )
 
 $ErrorActionPreference = 'Stop'
@@ -18,16 +20,26 @@ if (-not (Test-Path -LiteralPath $DeckPath)) {
     throw "Deck not found: $DeckPath"
 }
 
-$chromeCandidates = @(
-    'C:\Program Files\Google\Chrome\Application\chrome.exe',
-    'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
-    'C:\Program Files\Microsoft\Edge\Application\msedge.exe',
-    'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
-)
+if ($BrowserPath) {
+    if (-not (Test-Path -LiteralPath $BrowserPath)) {
+        throw "BrowserPath was provided but does not exist: $BrowserPath"
+    }
+    $browser = $BrowserPath
+}
+else {
+    $browserNames = @('chrome.exe', 'msedge.exe', 'chromium.exe')
+    $browser = $null
+    foreach ($name in $browserNames) {
+        $cmd = Get-Command $name -ErrorAction SilentlyContinue
+        if ($cmd) {
+            $browser = $cmd.Source
+            break
+        }
+    }
+}
 
-$browser = $chromeCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
 if (-not $browser) {
-    throw "Chrome or Edge was not found."
+    throw "Chrome, Edge, or Chromium was not found on PATH. Provide -BrowserPath or set BROWSER_PATH."
 }
 
 $deck = Resolve-Path -LiteralPath $DeckPath

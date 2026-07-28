@@ -1,12 +1,51 @@
 # Li's AI Skills
 
-Portable source-of-truth repo for Li's personal AI-agent skills.
+Portable source-of-truth repo for reusable AI-agent skills.
 
 This repo is intentionally separate from vendor or system-managed skill sets:
 
-- Do not copy `C:\Users\lidang\.codex\skills\.system`.
-- Do not copy MATLAB Agentic Toolkit skills from `C:\Users\lidang\.matlab\agentic-toolkits`.
-- Keep only Li-authored reusable skills under `skills/`.
+- Do not copy Codex system skills from `%USERPROFILE%\.codex\skills\.system`.
+- Do not copy vendor-managed MATLAB Agentic Toolkit skills from `%USERPROFILE%\.matlab\agentic-toolkits`.
+- Keep only user-authored reusable skills under `skills/`.
+
+## Skill System Map
+
+```mermaid
+flowchart LR
+  subgraph Source["Source of truth"]
+    Skills["skills/*"]
+    Metadata["skill.yaml"]
+    References["references / scripts / assets"]
+  end
+
+  subgraph Profiles["Selectable profiles"]
+    Default["default.yaml"]
+    Coding["coding.yaml"]
+    Presentation["presentation.yaml"]
+  end
+
+  subgraph Adapters["Tool adapters"]
+    Codex["adapters/codex"]
+    Claude["adapters/claude-code"]
+  end
+
+  subgraph Runtime["Generated or installed runtime copies"]
+    CodexRuntime["%USERPROFILE%/.codex/skills"]
+    ClaudeRuntime["%USERPROFILE%/.claude/skills"]
+    Generated["generated/*"]
+  end
+
+  Skills --> Metadata
+  Skills --> References
+  Skills --> Profiles
+  Profiles --> Codex
+  Profiles --> Claude
+  Codex --> CodexRuntime
+  Claude --> ClaudeRuntime
+  Claude --> Generated
+```
+
+The important rule is that `skills/` is edited by humans; adapters create tool-specific runtime copies.
 
 ## Layout
 

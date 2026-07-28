@@ -8,8 +8,8 @@ Adapters convert source skills into a target agent runtime format.
 - Select skills from `profiles/*.yaml`.
 - Write generated output only under `generated/<adapter>/` or the target runtime path.
 - Do not read or copy vendor-managed skill sets.
-- Do not modify `C:\Users\lidang\.matlab\agentic-toolkits`.
-- Do not modify `C:\Users\lidang\.codex\skills\.system`.
+- Do not modify `%USERPROFILE%\.matlab\agentic-toolkits`.
+- Do not modify `%USERPROFILE%\.codex\skills\.system`.
 
 ## Adding A New Adapter
 

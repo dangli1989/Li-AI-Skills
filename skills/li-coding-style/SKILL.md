@@ -7,7 +7,7 @@ description: Use in WFHBridge whenever writing or editing code, in any language.
 
 Baselines:
 - `01-active/2026-06-04-mbd-test-case-maintenance-class/src/+HarnessRepair` (28 files, 2,989 lines, analyzed 2026-07-06).
-- `C:\DevGit\temp\CreateParameterList.m` (single large MATLAB extraction/export workflow, analyzed 2026-07-22).
+- A single large MATLAB extraction/export workflow script using System Composer and data dictionaries, analyzed 2026-07-22.
 
 This is still MATLAB-heavy evidence, but it now includes both package/class code and a long procedural System Composer/data-dictionary extraction script. The principles below are split into what's genuinely cross-language (apply in any language WFHBridge code gets written in) and what's MATLAB syntax detail (apply only to `.m` files). When code shows up in a new language, extend this file with what's language-specific for it rather than assuming the MATLAB section generalizes.
 

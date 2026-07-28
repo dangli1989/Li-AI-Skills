@@ -21,6 +21,14 @@ $forbiddenPathPatterns = @(
     '\\.codex\\skills\\.system'
 )
 
+$machineSpecificPathPatterns = @(
+    ('C:' + '\\Users\\[^\\\s]+'),
+    ('C:' + '/Users/' + '[^/\s]+'),
+    ('C:' + '\\DevGit\b'),
+    ('C:' + '/DevGit' + '\b'),
+    ('\b' + 'li' + 'dang' + '\b')
+)
+
 $skillDirs = Get-ChildItem -Directory -LiteralPath $skillsRoot
 foreach ($skill in $skillDirs) {
     $skillMd = Join-Path $skill.FullName 'SKILL.md'
@@ -61,6 +69,23 @@ foreach ($adapter in @('codex', 'claude-code')) {
         $path = Join-Path $adapterRoot $fileName
         if (-not (Test-Path -LiteralPath $path)) {
             $errors.Add("Missing adapter file: adapters/$adapter/$fileName")
+        }
+    }
+}
+
+$repoTextFiles = Get-ChildItem -Recurse -File -LiteralPath $repoRoot |
+    Where-Object {
+        $_.FullName -notmatch '\\.git\\|\\generated\\' -and
+        $_.Extension -in @('.md', '.yaml', '.yml', '.ps1', '.html', '.css', '.js', '.txt', '.gitignore')
+    }
+
+foreach ($file in $repoTextFiles) {
+    $text = Get-Content -Raw -LiteralPath $file.FullName
+    foreach ($pattern in $machineSpecificPathPatterns) {
+        if ($text -match $pattern) {
+            $relativePath = Resolve-Path -LiteralPath $file.FullName -Relative
+            $errors.Add("Machine-specific path or username in $relativePath")
+            break
         }
     }
 }

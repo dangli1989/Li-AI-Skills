@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Technical Presentation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <header>
+        <div class="eyebrow">Technical share</div>
+        <div class="timer">Slide 1 / 3</div>
+      </header>
+      <div class="layout wide-left">
+        <div class="stack">
+          <h1 class="jelly">Use AI While Knowing What It Is Doing</h1>
+          <p class="jelly">Plan the behavior, review the output, own the deliverable.</p>
+        </div>
+        <div class="panel pad jelly">
+          <h2>Understand -> Review -> Maintain</h2>
+        </div>
+      </div>
+      <footer>
+        <span>Engineering ownership stays with us.</span>
+        <span>Use arrow keys</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Agenda</div>
+        <div class="timer">Slide 2 / 3</div>
+      </header>
+      <div class="layout wide-right">
+        <div class="stack">
+          <h2 class="jelly">What we will cover.</h2>
+          <p class="jelly">A workflow for using AI without losing control of the result.</p>
+        </div>
+        <div class="card-grid">
+          <div class="card jelly" data-from="left"><strong>1</strong><p>Problem</p></div>
+          <div class="card jelly" data-from="left"><strong>2</strong><p>Demo</p></div>
+          <div class="card jelly" data-from="left"><strong>3</strong><p>Method</p></div>
+        </div>
+      </div>
+      <footer>
+        <span>Keep the flow aligned with the actual slides.</span>
+        <span>2</span>
+      </footer>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Close</div>
+        <div class="timer">Slide 3 / 3</div>
+      </header>
+      <div class="panel pad jelly">
+        <h2>Ask AI, then verify.</h2>
+        <p>Do not accept what you cannot understand, test, and maintain.</p>
+      </div>
+      <footer>
+        <span>Use AI as an assistant. Own the deliverable.</span>
+        <span>3</span>
+      </footer>
+    </section>
+  </main>
+
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <div class="nav-help">Left / Right | Space | Home / End</div>
+
+  <script src="jelly.js"></script>
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progressBar = document.getElementById("progressBar");
+    const jelly = createJellyAnimator(".jelly");
+    let index = 0;
+
+    function isInteractiveTarget(target) {
+      return target instanceof Element && Boolean(target.closest("input, textarea, button, a, select, [contenteditable='true']"));
+    }
+
+    function showSlide(nextIndex) {
+      const bounded = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      jelly.clear();
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === bounded);
+        slide.classList.toggle("prev", slideIndex < bounded);
+      });
+      index = bounded;
+      progressBar.style.width = `${((index + 1) / slides.length) * 100}%`;
+      requestAnimationFrame(() => jelly.animate(slides[index]));
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      if (isInteractiveTarget(event.target)) return;
+
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        showSlide(index + 1);
+      }
+      if (["ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        showSlide(index - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>

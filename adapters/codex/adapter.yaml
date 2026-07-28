@@ -1,0 +1,8 @@
+id: codex
+name: Codex CLI
+runtime_root: "%USERPROFILE%\\.codex\\skills"
+generated_root: "generated\\codex"
+install_mode: copy
+notes:
+  - "Do not overwrite .system skills."
+  - "Only install skills selected by a profile."

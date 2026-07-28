@@ -1,0 +1,17 @@
+id: do-it-with-a-plan
+name: Do It With A Plan
+description: Planning and approval guardrail for state-changing work and multi-step investigations.
+status: active
+owner: Li
+entrypoint: SKILL.md
+tags:
+  - planning
+  - guardrail
+  - workflow
+resources:
+  references: true
+  scripts: false
+  assets: false
+supported_adapters:
+  - codex
+  - claude-code

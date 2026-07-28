@@ -1,0 +1,17 @@
+id: li-coding-style
+name: Li Coding Style
+description: Li's personal coding style guidance for naming, structure, comments, and safety habits.
+status: active
+owner: Li
+entrypoint: SKILL.md
+tags:
+  - coding
+  - style
+  - matlab
+resources:
+  references: false
+  scripts: false
+  assets: false
+supported_adapters:
+  - codex
+  - claude-code

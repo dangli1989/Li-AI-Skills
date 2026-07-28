@@ -1,0 +1,18 @@
+id: make-html-presentation
+name: Make HTML Presentation
+description: Build polished animated HTML presentations with reusable templates, visual review, and presentation workflow guidance.
+status: active
+owner: Li
+entrypoint: SKILL.md
+tags:
+  - presentation
+  - html
+  - storytelling
+  - visual-review
+resources:
+  references: true
+  scripts: true
+  assets: true
+supported_adapters:
+  - codex
+  - claude-code

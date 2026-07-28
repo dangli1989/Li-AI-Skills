@@ -1,0 +1,12 @@
+generated/**
+!generated/
+!generated/codex/
+!generated/claude-code/
+
+*.tmp
+*.bak
+*.log
+*.zip
+
+.DS_Store
+Thumbs.db

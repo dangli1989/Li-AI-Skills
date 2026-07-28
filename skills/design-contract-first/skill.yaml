@@ -1,0 +1,19 @@
+id: design-contract-first
+name: Design Contract First
+description: Keep MATLAB package/tool changes traceable to an accepted design contract and single source of truth.
+status: active
+owner: Li
+entrypoint: SKILL.md
+tags:
+  - matlab
+  - design
+  - api
+  - workflow
+  - guardrail
+resources:
+  references: true
+  scripts: false
+  assets: false
+supported_adapters:
+  - codex
+  - claude-code

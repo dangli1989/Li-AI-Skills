@@ -38,6 +38,7 @@ Apply this to new code. Do not rewrite existing code purely to match it — only
 **Comments & logging**
 - Target roughly **15% comment density** (comment lines ÷ non-blank lines) as a calibration point — not a floor to pad toward or a ceiling to trim to. Measured baseline: 396/2,700 ≈ 14.7% in the MATLAB source.
 - Comments explain **why**, not what the code already says. The `CreateParameterList` sample confirms three preferred comment categories: dated change notes for meaningful behavior/history, `%%` phase headers for long workflows, and local why/rule comments near non-obvious business logic or API behavior.
+- Keep comments brief and calm. If several consecutive lines do similar setup, validation, assignment, or extraction work, use one short section comment for the group instead of commenting each line or property. Avoid making the code look busy.
 - Don't strip existing commented-out code when editing nearby lines — kept deliberately as history.
 - Long-running operations get progress output with clear phase markers; warnings/errors say what to do next, not just what went wrong.
 - Use section-header comments to break up long functions into logical phases. In long MATLAB workflows, Li commonly uses sections such as `%% Prepare and validate work environment`, `%% Initialize output data`, `%% Parse Input`, `%% Extract Lists`, and helper group headings like `%% Major Helper Functions - Nested`.

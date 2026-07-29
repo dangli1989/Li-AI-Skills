@@ -7,7 +7,7 @@ description: Use in WFHBridge whenever writing or editing code, in any language.
 
 Baselines:
 - `01-active/2026-06-04-mbd-test-case-maintenance-class/src/+HarnessRepair` (28 files, 2,989 lines, analyzed 2026-07-06).
-- A single large MATLAB extraction/export workflow script using System Composer and data dictionaries, analyzed 2026-07-22.
+- `C:\DevGit\temp\CreateParameterList.m` (single large MATLAB extraction/export workflow, analyzed 2026-07-22).
 
 This is still MATLAB-heavy evidence, but it now includes both package/class code and a long procedural System Composer/data-dictionary extraction script. The principles below are split into what's genuinely cross-language (apply in any language WFHBridge code gets written in) and what's MATLAB syntax detail (apply only to `.m` files). When code shows up in a new language, extend this file with what's language-specific for it rather than assuming the MATLAB section generalizes.
 
@@ -18,12 +18,14 @@ Apply this to new code. Do not rewrite existing code purely to match it — only
 **Naming**
 - Boolean variables get a clear boolean marker prefix (`f_` in MATLAB — the equivalent idiomatic marker in another language, e.g. `is_`/`has_` in Python, is the same instinct, not a contradiction). Applied consistently, not just sometimes.
 - Loop indices get a short base name plus a context suffix once more than one is in scope (`idxTC`, `idxTS`) — not just `i`, `j`, `k` once ambiguity is possible.
+- Public/object properties use UpperCamelCase. Class names, method names, function names, and local variables use lowerCamelCase. Function or method input arguments/parameters use UpperCamelCase.
 - Follow each language's own casing convention for that construct (camelCase vars in MATLAB/JS, snake_case in Python, etc.) rather than importing MATLAB casing wholesale — the naming *discipline* (clear prefixes, context suffixes, no abbreviations without prior establishment) is what's personal style, not the specific casing.
 
 **Function/method design**
 - Success-flag-first returns where a language supports multiple returns: report success/failure as the primary signal, initialize outputs to failure defaults, set them on the success path.
 - Guard clauses with early return over deep nested conditionals.
 - Do not create a helper function when the helper body would be fewer than 5 lines and it is used only once. Keep the logic inline at the call site unless Li explicitly asks for it to be a function.
+- Helper extraction rule: if a helper-worthy code block is more than 10 lines and makes the main function/method harder to read, first try to explain the block with one clear local comment or section comment. If one simple comment is not enough, the block is more than 20 lines, and it makes the main flow hard to track, create a helper function in the same `.m` file. If the helper grows beyond 40 lines, class/method code may move it into the class `private/` folder. For standalone function development, keep helpers as subfunctions in the same file unless Li explicitly asks for a separate private helper.
 - Recursion is the right tool for graph/tree-shaped problems — prefer it over manual stack/queue bookkeeping when the problem is naturally recursive.
 - Order destructive/repair actions least-destructive-first (e.g. reroute > rename > recreate) rather than jumping straight to the most direct/destructive fix.
 

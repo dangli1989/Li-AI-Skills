@@ -7,7 +7,7 @@ description: Use in WFHBridge whenever writing or editing code, in any language.
 
 Baselines:
 - `01-active/2026-06-04-mbd-test-case-maintenance-class/src/+HarnessRepair` (28 files, 2,989 lines, analyzed 2026-07-06).
-- `C:\DevGit\temp\CreateParameterList.m` (single large MATLAB extraction/export workflow, analyzed 2026-07-22).
+- `CreateParameterList.m` (single large MATLAB extraction/export workflow, analyzed 2026-07-22).
 
 This is still MATLAB-heavy evidence, but it now includes both package/class code and a long procedural System Composer/data-dictionary extraction script. The principles below are split into what's genuinely cross-language (apply in any language WFHBridge code gets written in) and what's MATLAB syntax detail (apply only to `.m` files). When code shows up in a new language, extend this file with what's language-specific for it rather than assuming the MATLAB section generalizes.
 
@@ -39,6 +39,7 @@ Apply this to new code. Do not rewrite existing code purely to match it — only
 - Target roughly **15% comment density** (comment lines ÷ non-blank lines) as a calibration point — not a floor to pad toward or a ceiling to trim to. Measured baseline: 396/2,700 ≈ 14.7% in the MATLAB source.
 - Comments explain **why**, not what the code already says. The `CreateParameterList` sample confirms three preferred comment categories: dated change notes for meaningful behavior/history, `%%` phase headers for long workflows, and local why/rule comments near non-obvious business logic or API behavior.
 - Keep comments brief and calm. If several consecutive lines do similar setup, validation, assignment, or extraction work, use one short section comment for the group instead of commenting each line or property. Avoid making the code look busy.
+- In caller code, put a short intent comment before private-helper or local-subfunction calls so the main workflow is understandable without jumping into the helper. Group consecutive helper calls under one phase comment when they form one step; do not add repetitive comments that merely restate the function name.
 - Don't strip existing commented-out code when editing nearby lines — kept deliberately as history.
 - Long-running operations get progress output with clear phase markers; warnings/errors say what to do next, not just what went wrong.
 - Use section-header comments to break up long functions into logical phases. In long MATLAB workflows, Li commonly uses sections such as `%% Prepare and validate work environment`, `%% Initialize output data`, `%% Parse Input`, `%% Extract Lists`, and helper group headings like `%% Major Helper Functions - Nested`.
@@ -66,6 +67,7 @@ Apply this to new code. Do not rewrite existing code purely to match it — only
 - For generated/exported records, initialize struct arrays with explicit field lists so the schema is visible at the top of the workflow.
 - Use dictionaries/maps for duplicate detection and model-vs-input reconciliation when keys are business identifiers and values are record numbers or source rows.
 - Warning text should include the artifact being skipped and the action/result, for example that a component will not be added to the component list.
+- Prefer MATLAB array, string, and cell-array operations for simple element-wise transformations. Avoid manual `for` loops when the operation is naturally vectorized, such as formatting a list of names from indices and source strings. Use loops when each iteration has side effects, complex branching, object mutation, or API calls that cannot be expressed clearly as array operations.
 
 **Commenting calibration from `CreateParameterList`**
 - Do not rely only on function headers. Long workflows should have top-level phase comments and targeted local comments that explain business rules, external API constraints, or historical fixes.

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Make Presentation"
+  short_description: "Technical HTML and PPTX deck builder"
+  brand_color: "#0076A8"
+  default_prompt: "Use $make-presentation to create a polished technical presentation from my outline."

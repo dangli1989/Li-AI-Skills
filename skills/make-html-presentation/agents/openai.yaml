@@ -1,5 +1,0 @@
-interface:
-  display_name: "Make HTML Presentation"
-  short_description: "Animated technical HTML deck builder"
-  brand_color: "#0076A8"
-  default_prompt: "Use $make-html-presentation to create a polished animated technical presentation from my outline."

@@ -1,0 +1,489 @@
+{
+  "title": "MBD Establishment Workshop",
+  "subtitle": "A reusable workshop story for moving from hand code to model-based design",
+  "authorLine": "MathWorks Consulting",
+  "dateLine": "Story-first test output",
+  "useCase": "training-workshop",
+  "audience": "System and software engineers evaluating how to establish an MBD workflow from existing embedded C code.",
+  "purpose": "Reframe the source workshop into a clear training flow that shows why generic conversion steps are insufficient, what artifacts must be inspected, and how a repeatable MBD establishment path works.",
+  "coverTalkTrack": "This workshop is about turning an existing hand-code workflow into a repeatable model-based design establishment process. The deck is organized around decisions and artifacts, not around copying every original slide.",
+  "sourceFacts": [
+    "The source deck is a 61-slide MBD establishment workshop created from a customer-safe example.",
+    "The original story starts with generic hand-code-to-MBD steps, then shows why those steps need real project inputs.",
+    "The source workshop repeatedly reviews the path: define scope, analyze workflow and software architecture, convert typical software components, convert architecture, test, and plan next steps.",
+    "Source evidence includes C code excerpts, type/data definitions, software component boundaries, workflow diagrams, and a final next-step discussion."
+  ],
+  "progressLabels": [
+    "Scope",
+    "Workflow",
+    "Code artifacts",
+    "Architecture",
+    "Testing",
+    "Next steps"
+  ],
+  "missingInputs": [
+    "Replace generated placeholders with project-safe screenshots or exported model views if this becomes a customer-ready deck."
+  ],
+  "slides": [
+    {
+      "type": "agenda",
+      "title": "The workshop has one through-line: turn code evidence into model decisions",
+      "intro": "The conversion logic is visible before the presenter adds detail.",
+      "items": [
+        "Why generic MBD conversion steps are not enough",
+        "How the workshop reads existing code and workflow evidence",
+        "How System Composer and Simulink artifacts become the target design",
+        "How testing and next steps make the workflow repeatable"
+      ],
+      "reason": "Set the story around artifact-driven decisions instead of a list of topics.",
+      "talkTrack": "We start with the problem: the usual conversion checklist sounds reasonable, but it does not tell us what to do with real project constraints. The rest of the workshop shows how source code, architecture, workflow, and test evidence drive the conversion decisions.",
+      "builds": [
+        "Reveal the four agenda points in order."
+      ]
+    },
+    {
+      "type": "what-to-expect",
+      "title": "Workshop setup: every concept is tied to a concrete artifact",
+      "intro": "The workshop alternates between method, evidence, and practice so the audience can reuse the workflow.",
+      "sections": [
+        {
+          "label": "Method",
+          "detail": "A repeatable path for conversion decisions.",
+          "role": "what"
+        },
+        {
+          "label": "Evidence",
+          "detail": "Code, data structures, architecture, and workflow artifacts.",
+          "role": "why"
+        },
+        {
+          "label": "Modeling action",
+          "detail": "System Composer, Simulink, requirements, and tests.",
+          "role": "how"
+        },
+        {
+          "label": "Practice",
+          "detail": "Apply the pattern to one representative component.",
+          "role": "demo"
+        }
+      ],
+      "reason": "Define the training rhythm without declaring a deck-wide color legend that is not needed.",
+      "talkTrack": "The workshop works because every idea is connected to a project artifact. When we introduce a method, we immediately show the evidence that justifies it and the model action that follows.",
+      "builds": [
+        "Show method first.",
+        "Reveal evidence, modeling action, and practice as the instructional rhythm."
+      ]
+    },
+    {
+      "type": "v-model-tool-map",
+      "title": "The target workflow links decisions, tools, and verification",
+      "intro": "MBD establishment is a path through artifacts, not a one-step model translation.",
+      "phases": [
+        {
+          "label": "Scope",
+          "tool": "Project"
+        },
+        {
+          "label": "Architecture",
+          "tool": "System Composer"
+        },
+        {
+          "label": "Behavior",
+          "tool": "Simulink"
+        },
+        {
+          "label": "Requirements",
+          "tool": "Requirements"
+        },
+        {
+          "label": "Tests",
+          "tool": "Test"
+        }
+      ],
+      "callouts": [
+        "Every phase leaves a reviewable artifact.",
+        "The conversion path is teachable and repeatable."
+      ],
+      "reason": "Create the high-level mental model before showing detailed code evidence.",
+      "talkTrack": "This is the target pattern we want the audience to remember. Scope decides what is in or out. Architecture turns boundaries into System Composer structure. Behavior becomes Simulink implementation. Requirements and tests make the result reviewable.",
+      "builds": [
+        "Reveal the path from scope to tests.",
+        "Reveal tool labels with each phase.",
+        "Reveal the artifact and repeatability callouts."
+      ]
+    },
+    {
+      "type": "process-state-diagram",
+      "title": "Generic conversion steps fail when project inputs are missing",
+      "intro": "The original workshop asks: do we have enough input to execute these steps?",
+      "steps": [
+        {
+          "label": "Understand existing system",
+          "status": "Open",
+          "detail": "Need code, workflow, and architecture evidence."
+        },
+        {
+          "label": "Define requirements",
+          "status": "Review",
+          "detail": "Need behavior and acceptance criteria."
+        },
+        {
+          "label": "Create model",
+          "status": "Blocked",
+          "detail": "Wrong abstraction if boundaries are unclear."
+        },
+        {
+          "label": "Test model",
+          "status": "Pending",
+          "detail": "Tests need traceable source expectations."
+        }
+      ],
+      "reason": "Turn the early source-slide question into a visual risk argument.",
+      "talkTrack": "The first teaching point is that a checklist does not produce a useful model by itself. Each step depends on specific input evidence. If the evidence is missing, the model is either blocked or built at the wrong level of abstraction.",
+      "builds": [
+        "Reveal the generic steps.",
+        "Add state labels to show why each step is not actionable yet."
+      ]
+    },
+    {
+      "type": "process-state-diagram",
+      "title": "The workshop path resolves the missing-input problem",
+      "intro": "Instead of starting with modeling, the workshop creates evidence first.",
+      "steps": [
+        {
+          "label": "Define scope",
+          "status": "Ready",
+          "detail": "Choose representative conversion target."
+        },
+        {
+          "label": "Analyze workflow",
+          "status": "Ready",
+          "detail": "Locate runtime and ownership boundaries."
+        },
+        {
+          "label": "Review code artifacts",
+          "status": "Ready",
+          "detail": "Find data, types, and control behavior."
+        },
+        {
+          "label": "Convert architecture",
+          "status": "Next",
+          "detail": "Map interfaces and components."
+        },
+        {
+          "label": "Test and plan",
+          "status": "Next",
+          "detail": "Turn findings into repeatable workflow."
+        }
+      ],
+      "activeProgressLabel": "Workflow",
+      "reason": "Show the replacement process that makes conversion actionable.",
+      "talkTrack": "The workshop solves the problem by changing the order. We do not model first. We define the scope, analyze the workflow, inspect code artifacts, then create architecture and tests from evidence.",
+      "builds": [
+        "Reveal scope and workflow.",
+        "Reveal code artifacts as the bridge to modeling.",
+        "Reveal architecture, testing, and next steps."
+      ]
+    },
+    {
+      "type": "code-review-excerpt",
+      "title": "Source code is not just implementation; it exposes modeling decisions",
+      "intro": "The source deck used code excerpts to identify boundaries, states, and data dependencies.",
+      "code": "void VFNormalControl(void)\n{\n    RegeneratingEnergyControl(...);\n    OutPutFreqCompute();\n    VFCurveFreqPu = RTDB.StartReferSource.flINToutFreqPu;\n\n    if (fabs(...) <= cAt_Reference_point) {\n        status_reg_st...AT_REFERENCE_BIT = RunStatus_Reached;\n    }\n\n    VFCurveFreqPu = RangeLimit(...);\n}",
+      "callouts": [
+        {
+          "label": "Control sequence suggests subsystem behavior.",
+          "role": "model"
+        },
+        {
+          "label": "RTDB access reveals data ownership and interfaces.",
+          "role": "architecture"
+        },
+        {
+          "label": "Status bits become requirements and test observations.",
+          "role": "verification"
+        }
+      ],
+      "reason": "Use a concrete code artifact so the workshop does not remain abstract.",
+      "talkTrack": "This code excerpt is useful because it shows several modeling decisions at once. The function sequence suggests behavior boundaries. The RTDB access suggests interfaces. The status bit assignment suggests requirements and test observations.",
+      "builds": [
+        "Show the code excerpt first.",
+        "Reveal each callout as a modeling decision."
+      ]
+    },
+    {
+      "type": "concept-artifact",
+      "title": "Data definitions become the interface contract",
+      "intro": "The workshop used data structures and typedefs to decide what the model must own, expose, or test.",
+      "concepts": [
+        {
+          "label": "Types define stable contracts",
+          "detail": "Structures and enums show expected data shape.",
+          "role": "architecture"
+        },
+        {
+          "label": "Globals reveal coupling",
+          "detail": "Shared RTDB fields become interface review targets.",
+          "role": "risk"
+        },
+        {
+          "label": "Status fields become observable outcomes",
+          "detail": "They help define requirements and tests.",
+          "role": "verification"
+        }
+      ],
+      "artifactLabel": "Add project-safe DataBase.h or data dictionary screenshot",
+      "images": [
+        {
+          "path": "assets/placeholders/data-definition.png",
+          "caption": "Data definition evidence placeholder",
+          "placeholder": true
+        }
+      ],
+      "callouts": [
+        {
+          "label": "Own",
+          "role": "model"
+        },
+        {
+          "label": "Expose",
+          "role": "architecture"
+        },
+        {
+          "label": "Verify",
+          "role": "verification"
+        }
+      ],
+      "assetStatus": "Placeholder used because the real customer-safe screenshot was not provided.",
+      "missingInputs": [
+        "Add a sanitized DataBase.h or data dictionary screenshot when available."
+      ],
+      "reason": "Demonstrate the concept-plus-artifact pattern from the MBSE/training corpus.",
+      "talkTrack": "The data-definition slide turns source code into an interface contract. The point is not to paste every typedef. The point is to decide what the model owns, what it exposes, and what tests need to observe.",
+      "builds": [
+        "Reveal the three concept cards.",
+        "Reveal the artifact placeholder and the own/expose/verify callouts."
+      ]
+    },
+    {
+      "type": "artifact-map",
+      "title": "A useful conversion review connects artifacts to decisions",
+      "intro": "This is the reusable review map behind the workshop.",
+      "artifacts": [
+        {
+          "label": "Scope",
+          "detail": "Which component or workflow is the representative target?",
+          "role": "current"
+        },
+        {
+          "label": "Workflow",
+          "detail": "What executes, in what order, and under what mode?",
+          "role": "model"
+        },
+        {
+          "label": "Code evidence",
+          "detail": "Which functions, data, and states drive boundaries?",
+          "role": "action"
+        },
+        {
+          "label": "Architecture",
+          "detail": "What components and interfaces must exist?",
+          "role": "architecture"
+        },
+        {
+          "label": "Test evidence",
+          "detail": "Which behavior proves the conversion is acceptable?",
+          "role": "verification"
+        },
+        {
+          "label": "Open gaps",
+          "detail": "What remains unknown before customer adoption?",
+          "role": "risk"
+        }
+      ],
+      "reason": "Provide a repeatable review scaffold that can be reused in future customer workshops.",
+      "talkTrack": "This map is the reusable working view. Every artifact has to answer a decision question. If an artifact does not answer a decision, it belongs in backup material, not the main workflow.",
+      "builds": [
+        "Reveal the first three source-side artifacts.",
+        "Reveal architecture, tests, and gaps as the target-side decisions."
+      ]
+    },
+    {
+      "type": "v-model-tool-map",
+      "title": "System Composer captures architecture after the evidence is understood",
+      "intro": "The source workshop moved from current workflow analysis into architecture conversion and testing.",
+      "phases": [
+        {
+          "label": "Functions",
+          "tool": "C source"
+        },
+        {
+          "label": "Components",
+          "tool": "System Composer"
+        },
+        {
+          "label": "Interfaces",
+          "tool": "Data Dictionary"
+        },
+        {
+          "label": "Behavior",
+          "tool": "Simulink"
+        },
+        {
+          "label": "Evidence",
+          "tool": "Test Manager"
+        }
+      ],
+      "callouts": [
+        "Architecture is a consequence of evidence, not a drawing exercise.",
+        "Testing closes the loop by checking converted behavior against source intent."
+      ],
+      "activeProgressLabel": "Architecture",
+      "reason": "Teach best practice for sequencing System Composer work in an MBD establishment service.",
+      "talkTrack": "System Composer is most effective after the team understands the source evidence. We use code and workflow analysis to decide components and interfaces, then move behavior into Simulink and verification into tests.",
+      "builds": [
+        "Reveal source functions and System Composer components.",
+        "Reveal interfaces, behavior, and test evidence."
+      ]
+    },
+    {
+      "type": "comparison-table",
+      "title": "The workshop leaves decisions, not just observations",
+      "intro": "A review table shows what is known, what is validated, and what still needs action.",
+      "headers": [
+        "Decision",
+        "Evidence",
+        "Status",
+        "Next action"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "Representative component scope",
+            "Workflow and source file review",
+            "Validated",
+            "Use as first conversion target"
+          ]
+        },
+        {
+          "cells": [
+            "Component boundary",
+            "Function calls and data ownership",
+            "Review",
+            "Confirm with subject matter experts"
+          ]
+        },
+        {
+          "cells": [
+            "Interface contract",
+            "RTDB and type definitions",
+            "Open gap",
+            "Add sanitized data dictionary evidence"
+          ]
+        },
+        {
+          "cells": [
+            "Verification evidence",
+            "Status bits and expected behavior",
+            "Pending",
+            "Create test harness and acceptance checks"
+          ]
+        }
+      ],
+      "callout": "A useful table makes status and next action visible before the presenter explains it.",
+      "reason": "Replace a plain text table with a status-driven decision table.",
+      "talkTrack": "This table is intentionally not just a list. It shows the decision, the evidence supporting it, whether the decision is validated, and the next action. That makes the slide useful even when someone reads it later.",
+      "builds": [
+        "Reveal the decision table.",
+        "Call attention to status and next-action columns."
+      ]
+    },
+    {
+      "type": "demo-exercise",
+      "title": "Exercise: convert one component using the artifact map",
+      "panels": [
+        {
+          "label": "Start",
+          "detail": "Pick one source function and its data dependencies.",
+          "role": "current"
+        },
+        {
+          "label": "Build",
+          "detail": "Draft component, interfaces, and behavior boundary.",
+          "role": "action"
+        },
+        {
+          "label": "Check",
+          "detail": "Define the requirement and test observation.",
+          "role": "verification"
+        }
+      ],
+      "activeProgressLabel": "Testing",
+      "reason": "Turn the workshop story into an action the audience can practice.",
+      "talkTrack": "The exercise uses one representative component. The audience starts with source evidence, drafts the modeling boundary, and ends by defining what would prove the conversion is correct.",
+      "builds": [
+        "Reveal Start, Build, and Check as a three-step exercise."
+      ]
+    },
+    {
+      "type": "recap",
+      "title": "Reusable MBD establishment pattern",
+      "subtitle": "Takeaways for the audience",
+      "items": [
+        "Start from project evidence, not from a generic conversion checklist.",
+        "Use System Composer after boundaries and interfaces are justified by artifacts.",
+        "Use Simulink, requirements, and tests to make the conversion reviewable.",
+        "Track missing screenshots, data, and assumptions as explicit gaps."
+      ],
+      "reason": "Close the training loop with a memorable reusable method.",
+      "talkTrack": "The reusable pattern is evidence first, architecture second, behavior third, verification always. Missing information is not ignored; it is tracked as a project gap.",
+      "builds": [
+        "Reveal the four takeaways in order."
+      ]
+    },
+    {
+      "type": "results-table",
+      "title": "Where are we now, and what is next?",
+      "intro": "The source workshop ended by separating MathWorks actions and customer actions.",
+      "headers": [
+        "Owner",
+        "Current state",
+        "Status",
+        "Next step"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "MathWorks Consulting",
+            "Workshop pattern and example conversion path",
+            "Complete",
+            "Package reusable material and demo assets"
+          ]
+        },
+        {
+          "cells": [
+            "Customer team",
+            "Project-specific source artifacts and architecture decisions",
+            "Pending",
+            "Provide sanitized screenshots, data, and constraints"
+          ]
+        },
+        {
+          "cells": [
+            "Joint team",
+            "Repeatable MBD establishment workflow",
+            "Next",
+            "Run one component through the full method"
+          ]
+        }
+      ],
+      "callout": "The next workshop ends with an owned action list and evidence gaps.",
+      "reason": "Preserve the source deck's closing intent while making ownership and next action readable.",
+      "talkTrack": "The close should make ownership clear. MathWorks packages the reusable method and demo assets. The customer team provides project-safe evidence. Together, the next step is to run one component through the full workflow.",
+      "builds": [
+        "Reveal owner rows.",
+        "End on the joint next step."
+      ]
+    }
+  ]
+}

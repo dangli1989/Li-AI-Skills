@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBD Establishment Workshop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="deck">
+<section class="slide title-slide active">
+  <div class="brand">MathWorks</div>
+  <h1>MBD Establishment Workshop</h1>
+  <p class="subtitle">A reusable workshop story for moving from hand code to model-based design</p>
+  <div class="title-meta"><strong>MathWorks Consulting</strong><br><span>Story-first test output</span></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 1 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>The workshop has one through-line: turn code evidence into model decisions</h2>
+  <p class="lead">The conversion logic is visible before the presenter adds detail.</p>
+  <div class="agenda-flow"><div class="flow-step reveal" data-step="0"><span>01</span><p>Why generic MBD conversion steps are not enough</p></div>
+<div class="flow-step reveal" data-step="1"><span>02</span><p>How the workshop reads existing code and workflow evidence</p></div>
+<div class="flow-step reveal" data-step="2"><span>03</span><p>How System Composer and Simulink artifacts become the target design</p></div>
+<div class="flow-step reveal" data-step="3"><span>04</span><p>How testing and next steps make the workflow repeatable</p></div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 2 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>Workshop setup: every concept is tied to a concrete artifact</h2>
+  <p class="lead">The workshop alternates between method, evidence, and practice so the audience can reuse the workflow.</p>
+  <div class="teaching-frame"><div class="teaching-band role-model reveal" data-step="0"><strong>Method</strong><span>A repeatable path for conversion decisions.</span></div>
+<div class="teaching-band role-model reveal" data-step="1"><strong>Evidence</strong><span>Code, data structures, architecture, and workflow artifacts.</span></div>
+<div class="teaching-band role-model reveal" data-step="2"><strong>Modeling action</strong><span>System Composer, Simulink, requirements, and tests.</span></div>
+<div class="teaching-band role-model reveal" data-step="3"><strong>Practice</strong><span>Apply the pattern to one representative component.</span></div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 3 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>The target workflow links decisions, tools, and verification</h2>
+  <p class="lead">MBD establishment is a path through artifacts, not a one-step model translation.</p>
+  <div class="v-map"><div class="v-node reveal" data-step="0"><strong>Scope</strong><span>Project</span></div>
+<div class="v-node reveal" data-step="1"><strong>Architecture</strong><span>System Composer</span></div>
+<div class="v-node reveal" data-step="2"><strong>Behavior</strong><span>Simulink</span></div>
+<div class="v-node reveal" data-step="3"><strong>Requirements</strong><span>Requirements</span></div>
+<div class="v-node reveal" data-step="4"><strong>Tests</strong><span>Test</span></div></div>
+  <div class="note-row"><div class="evidence-note reveal" data-step="5">Every phase leaves a reviewable artifact.</div><div class="evidence-note reveal" data-step="6">The conversion path is teachable and repeatable.</div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 4 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>Generic conversion steps fail when project inputs are missing</h2>
+  <p class="lead">The original workshop asks: do we have enough input to execute these steps?</p>
+  <div class="state-flow"><div class="state-card status-info reveal" data-step="0"><span class="status-pill">Open</span><strong>Understand existing system</strong><p>Need code, workflow, and architecture evidence.</p></div>
+<div class="state-card status-warn reveal" data-step="1"><span class="status-pill">Review</span><strong>Define requirements</strong><p>Need behavior and acceptance criteria.</p></div>
+<div class="state-card status-bad reveal" data-step="2"><span class="status-pill">Blocked</span><strong>Create model</strong><p>Wrong abstraction if boundaries are unclear.</p></div>
+<div class="state-card status-warn reveal" data-step="3"><span class="status-pill">Pending</span><strong>Test model</strong><p>Tests need traceable source expectations.</p></div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 5 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>The workshop path resolves the missing-input problem</h2>
+  <p class="lead">Instead of starting with modeling, the workshop creates evidence first.</p>
+  <div class="state-flow"><div class="state-card status-good reveal" data-step="0"><span class="status-pill">Ready</span><strong>Define scope</strong><p>Choose representative conversion target.</p></div>
+<div class="state-card status-good reveal" data-step="1"><span class="status-pill">Ready</span><strong>Analyze workflow</strong><p>Locate runtime and ownership boundaries.</p></div>
+<div class="state-card status-good reveal" data-step="2"><span class="status-pill">Ready</span><strong>Review code artifacts</strong><p>Find data, types, and control behavior.</p></div>
+<div class="state-card status-warn reveal" data-step="3"><span class="status-pill">Next</span><strong>Convert architecture</strong><p>Map interfaces and components.</p></div>
+<div class="state-card status-warn reveal" data-step="4"><span class="status-pill">Next</span><strong>Test and plan</strong><p>Turn findings into repeatable workflow.</p></div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 6 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>Source code is not just implementation; it exposes modeling decisions</h2>
+  <p class="lead">The source deck used code excerpts to identify boundaries, states, and data dependencies.</p>
+  <div class="code-layout">
+    <pre class="code-card reveal" data-step="0"><code>void VFNormalControl(void)
+{
+    RegeneratingEnergyControl(...);
+    OutPutFreqCompute();
+    VFCurveFreqPu = RTDB.StartReferSource.flINToutFreqPu;
+
+    if (fabs(...) &lt;= cAt_Reference_point) {
+        status_reg_st...AT_REFERENCE_BIT = RunStatus_Reached;
+    }
+
+    VFCurveFreqPu = RangeLimit(...);
+}</code></pre>
+    <div class="callout-stack"><div class="callout role-model reveal" data-step="1">Control sequence suggests subsystem behavior.</div>
+<div class="callout role-model reveal" data-step="2">RTDB access reveals data ownership and interfaces.</div>
+<div class="callout role-good reveal" data-step="3">Status bits become requirements and test observations.</div></div>
+  </div>
+  <footer><span>MathWorks Consulting</span><span>Slide 7 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>Data definitions become the interface contract</h2>
+  <p class="lead">The workshop used data structures and typedefs to decide what the model must own, expose, or test.</p>
+  <div class="concept-artifact">
+    <div><div class="concept-card role-model reveal" data-step="0"><strong>Types define stable contracts</strong><span>Structures and enums show expected data shape.</span></div>
+<div class="concept-card role-risk reveal" data-step="1"><strong>Globals reveal coupling</strong><span>Shared RTDB fields become interface review targets.</span></div>
+<div class="concept-card role-good reveal" data-step="2"><strong>Status fields become observable outcomes</strong><span>They help define requirements and tests.</span></div></div>
+    <div class="artifact-placeholder reveal" data-step="3"><strong>Placeholder</strong><span>Add project-safe DataBase.h or data dictionary screenshot</span><div class="chip-row"><span>Own</span><span>Expose</span><span>Verify</span></div></div>
+  </div>
+  <footer><span>MathWorks Consulting</span><span>Slide 8 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>A useful conversion review connects artifacts to decisions</h2>
+  <p class="lead">This is the reusable review map behind the workshop.</p>
+  <div class="artifact-grid"><div class="artifact-card role-current reveal" data-step="0"><strong>Scope</strong><p>Which component or workflow is the representative target?</p></div>
+<div class="artifact-card role-model reveal" data-step="1"><strong>Workflow</strong><p>What executes, in what order, and under what mode?</p></div>
+<div class="artifact-card role-action reveal" data-step="2"><strong>Code evidence</strong><p>Which functions, data, and states drive boundaries?</p></div>
+<div class="artifact-card role-model reveal" data-step="3"><strong>Architecture</strong><p>What components and interfaces must exist?</p></div>
+<div class="artifact-card role-good reveal" data-step="4"><strong>Test evidence</strong><p>Which behavior proves the conversion is acceptable?</p></div>
+<div class="artifact-card role-risk reveal" data-step="5"><strong>Open gaps</strong><p>What remains unknown before customer adoption?</p></div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 9 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>System Composer captures architecture after the evidence is understood</h2>
+  <p class="lead">The source workshop moved from current workflow analysis into architecture conversion and testing.</p>
+  <div class="v-map"><div class="v-node reveal" data-step="0"><strong>Functions</strong><span>C source</span></div>
+<div class="v-node reveal" data-step="1"><strong>Components</strong><span>System Composer</span></div>
+<div class="v-node reveal" data-step="2"><strong>Interfaces</strong><span>Data Dictionary</span></div>
+<div class="v-node reveal" data-step="3"><strong>Behavior</strong><span>Simulink</span></div>
+<div class="v-node reveal" data-step="4"><strong>Evidence</strong><span>Test Manager</span></div></div>
+  <div class="note-row"><div class="evidence-note reveal" data-step="5">Architecture is a consequence of evidence, not a drawing exercise.</div><div class="evidence-note reveal" data-step="6">Testing closes the loop by checking converted behavior against source intent.</div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 10 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>The workshop leaves decisions, not just observations</h2>
+  <p class="lead">A review table shows what is known, what is validated, and what still needs action.</p>
+  <div class="table-wrap reveal" data-step="0"><table><thead><tr><th>Decision</th><th>Evidence</th><th>Status</th><th>Next action</th></tr></thead><tbody><tr><td>Representative component scope</td><td>Workflow and source file review</td><td class="status-good">Validated</td><td>Use as first conversion target</td></tr>
+<tr><td>Component boundary</td><td>Function calls and data ownership</td><td class="status-warn">Review</td><td>Confirm with subject matter experts</td></tr>
+<tr><td>Interface contract</td><td>RTDB and type definitions</td><td class="status-bad">Open gap</td><td>Add sanitized data dictionary evidence</td></tr>
+<tr><td>Verification evidence</td><td>Status bits and expected behavior</td><td class="status-warn">Pending</td><td>Create test harness and acceptance checks</td></tr></tbody></table></div>
+  <div class="bottom-callout reveal" data-step="1">A useful table makes status and next action visible before the presenter explains it.</div>
+  <footer><span>MathWorks Consulting</span><span>Slide 11 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>Exercise: convert one component using the artifact map</h2>
+  <div class="exercise-row"><div class="exercise-panel role-current reveal" data-step="0"><strong>Start</strong><p>Pick one source function and its data dependencies.</p></div>
+<div class="exercise-panel role-action reveal" data-step="1"><strong>Build</strong><p>Draft component, interfaces, and behavior boundary.</p></div>
+<div class="exercise-panel role-good reveal" data-step="2"><strong>Check</strong><p>Define the requirement and test observation.</p></div></div>
+  <footer><span>MathWorks Consulting</span><span>Slide 12 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>Reusable MBD establishment pattern</h2>
+  <p class="lead">Takeaways for the audience</p>
+  <ul class="takeaways reveal" data-step="0"><li>Start from project evidence, not from a generic conversion checklist.</li>
+<li>Use System Composer after boundaries and interfaces are justified by artifacts.</li>
+<li>Use Simulink, requirements, and tests to make the conversion reviewable.</li>
+<li>Track missing screenshots, data, and assumptions as explicit gaps.</li></ul>
+  <footer><span>MathWorks Consulting</span><span>Slide 13 / 14</span></footer>
+</section>
+<section class="slide">
+  <div class="brand">MathWorks</div>
+  <h2>Where are we now, and what is next?</h2>
+  <p class="lead">The source workshop ended by separating MathWorks actions and customer actions.</p>
+  <div class="table-wrap reveal" data-step="0"><table><thead><tr><th>Owner</th><th>Current state</th><th>Status</th><th>Next step</th></tr></thead><tbody><tr><td>MathWorks Consulting</td><td>Workshop pattern and example conversion path</td><td class="status-good">Complete</td><td>Package reusable material and demo assets</td></tr>
+<tr><td>Customer team</td><td>Project-specific source artifacts and architecture decisions</td><td class="status-warn">Pending</td><td>Provide sanitized screenshots, data, and constraints</td></tr>
+<tr><td>Joint team</td><td>Repeatable MBD establishment workflow</td><td class="status-warn">Next</td><td>Run one component through the full method</td></tr></tbody></table></div>
+  <div class="bottom-callout reveal" data-step="1">The next workshop ends with an owned action list and evidence gaps.</div>
+  <footer><span>MathWorks Consulting</span><span>Slide 14 / 14</span></footer>
+</section>
+  </main>
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let slideIndex = Math.max(0, slides.findIndex(slide => slide.classList.contains('active')));
+    let step = 0;
+
+    function showSlide(nextIndex, nextStep = 0) {
+      slideIndex = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      step = Math.max(0, nextStep);
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === slideIndex);
+        slide.querySelectorAll('.reveal').forEach(item => {
+          const itemStep = Number(item.dataset.step || 0);
+          item.classList.toggle('visible', index === slideIndex && itemStep <= step);
+        });
+      });
+    }
+
+    function maxStep(slide) {
+      const values = Array.from(slide.querySelectorAll('.reveal')).map(item => Number(item.dataset.step || 0));
+      return values.length ? Math.max(...values) : 0;
+    }
+
+    window.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown') {
+        const max = maxStep(slides[slideIndex]);
+        if (step < max) showSlide(slideIndex, step + 1);
+        else showSlide(slideIndex + 1, 0);
+      }
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        if (step > 0) showSlide(slideIndex, step - 1);
+        else showSlide(slideIndex - 1, maxStep(slides[Math.max(0, slideIndex - 1)]));
+      }
+    });
+    showSlide(slideIndex, 0);
+  </script>
+</body>
+</html>

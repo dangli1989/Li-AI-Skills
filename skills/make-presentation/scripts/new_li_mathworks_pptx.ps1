@@ -1387,6 +1387,7 @@ try {
             'artifact-map' { Add-ArtifactMapSlide $presentation $slideSpec }
             'artifact-review' { Add-ArtifactMapSlide $presentation $slideSpec }
             'architecture-layer' { Add-ArtifactMapSlide $presentation $slideSpec }
+            'team-context' { Add-ArtifactMapSlide $presentation $slideSpec }
             'concept-artifact' { Add-ConceptArtifactSlide $presentation $slideSpec }
             'v-model-tool-map' { Add-VModelToolMapSlide $presentation $slideSpec }
             'process-state-diagram' { Add-ProcessStateDiagramSlide $presentation $slideSpec }

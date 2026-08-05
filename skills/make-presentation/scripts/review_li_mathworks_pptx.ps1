@@ -330,6 +330,23 @@ try {
                         $errors.Add("Slide $($slide.SlideIndex) appears to have a custom bottom stripe '$name'; use template decoration only.")
                     }
                 } catch {}
+
+                # Template-override audit: every custom shape must be a tagged preset pattern
+                # or carry a recorded justification; untagged free-hand shapes are drift.
+                if (-not $pattern) {
+                    if ($Strict) {
+                        $styleErrors.Add("Slide $($slide.SlideIndex) has untagged custom shape '$name'; every custom shape must come from a documented preset (Li pattern tag) or be justified in ground-truth.md.") | Out-Null
+                    } else {
+                        $warnings.Add("Slide $($slide.SlideIndex) has untagged custom shape '$name'; every custom shape must come from a documented preset (Li pattern tag) or be justified in ground-truth.md.") | Out-Null
+                    }
+                }
+
+                try {
+                    $inTitleBand = ($shape.Top -lt 95 -and $layout -ne 'Title Slide')
+                    if ($inTitleBand) {
+                        $errors.Add("Slide $($slide.SlideIndex) has generated shape '$name' in the title band; put titles in the template title placeholder, never a drawn box.")
+                    }
+                } catch {}
             }
         }
 

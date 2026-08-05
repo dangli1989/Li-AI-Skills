@@ -1,6 +1,90 @@
 # Li's MathWorks Slide Presets
 
-Use these presets with `scripts/new_li_mathworks_pptx.ps1` for Li's MathWorks PPTX decks. The presets are a style layer on top of the official MathWorks template, not a replacement for it.
+## Template First — Do Not Draw
+
+The point of this skill is to **use the MathWorks template**. The template's own guidance slide says it directly: *"Avoid manually formatting whenever possible. Instead, use built-in styles, templates, layouts, and colors. When creating new presentations, select the slide layout that best suits your needs from the built-in theme, then add content."*
+
+So the presets below describe **what goes on a slide, not shapes to draw**. They are rendered through the layout's own title and body placeholders, inheriting the template's type, sizes, bullet levels, and theme colours. Do not build slides out of drawn rectangles, cards, chips, bands, or frames — that produces a generic deck wearing MathWorks chrome, which is not this template and not Li's work.
+
+The only non-placeholder objects allowed are real content objects: **native PowerPoint tables**, **inserted pictures**, and a short caption line. Status tinting in tables is kept because it carries meaning. Everything else is placeholder text.
+
+If a slide genuinely needs a diagram, build it by hand in PowerPoint afterwards and record why in `ground-truth.md`. Do not have the generator invent one.
+
+Use these presets with `scripts/new_li_mathworks_pptx.ps1` (Windows) or `scripts/new_li_mathworks_pptx_mac.py` (macOS) for Li's MathWorks PPTX decks. The presets are a style layer on top of the official MathWorks template, not a replacement for it.
+
+## Generator Type Names
+
+The JSON spec `type` field must be one of the names below. Aliases map to the same builder as their base preset; use the alias when it better documents the slide's intent.
+
+| Preset | Aliases accepted by the generator |
+| --- | --- |
+| `agenda` | `learning-path` |
+| `section` | `chapter-divider` |
+| `what-to-expect` | — |
+| `content` | `chapter-objectives` |
+| `two-content` | — |
+| `process` | — |
+| `progress-sidebar` | `process-build-series` |
+| `process-state-diagram` | — |
+| `decision` | — |
+| `recap` | `recap-bridge` |
+| `artifact-map` | `artifact-review`, `architecture-layer`, `team-context` |
+| `concept-artifact` | — |
+| `v-model-tool-map` | — |
+| `code-review-excerpt` | `code-to-model-review` |
+| `image-evidence` | `screenshot-evidence`, `screenshot-callout`, `model-screenshot` |
+| `comparison-table` | `comparison-evidence-table`, `results-table` |
+| `demo-exercise` | `exercise-demo` |
+
+`imported-source-slide` is not a generator type: importing a source slide is a manual PowerPoint operation, documented below only so the review rules cover it.
+
+## Controlled Vocabularies
+
+`useCase` (top level, drives review checks): `training-workshop`, `customer-wrap-up`, `internal-sharing`, `general`.
+
+`role` / `status` tokens (drive semantic colour). Use ONE of these literal strings — they are matched as substrings, so `legacy`, `current`, `model`, `workflow`, `architecture`, `conversion`, `action`, `next`, `verification`, `validated`, `pass`, `risk`, `blocker`, `gap`, `review`, `highlight`, `pending` all work. Meaning:
+
+| Token | Colour | Use for |
+| --- | --- | --- |
+| `legacy`, `current` | grey | what exists today, being replaced |
+| `model`, `workflow`, `architecture` | blue | the new model/workflow artifact |
+| `conversion`, `action`, `next` | orange | work in progress, next step |
+| `verification`, `validated`, `pass` | green | verified, accepted, done |
+| `risk`, `blocker`, `gap` | red | blocked, failing, at risk |
+| `review`, `highlight`, `pending` | yellow | needs attention, unresolved |
+
+`process` steps and `decision` items also accept `role`. Omitting it renders neutral (grey for decisions, light blue for process steps) on purpose — a colour cycle that paints an unresolved item green states the opposite of the truth, and four pastels that encode nothing are decoration.
+
+**Status cell wording** in `comparison-table` / `results-table` is colour-coded by what it says, so write the honest word and the colour follows:
+
+- green: pass, passed, complete, completed, validated, verified, done, ok, ready, fixed, resolved, closed, accepted, approved, delivered, migrated, signed off
+- red: risk, gap, fail, failed, blocker, blocked, missing, open, overdue, not started, rejected, stalled
+- yellow: review, pending, next, watch, in progress, partial, waiting, TBC, TBD, proposed, deferred, unconfirmed
+
+Never reword an honest status to chase a colour. If the right word is missing from this list, say so rather than substituting a wrong one.
+
+`what-to-expect` `sections[].role` uses a separate teaching set: `best-practice`, `extra-note`, `why`, `how`, `what`, `demo`, `discussion`.
+
+## Capacity Limits
+
+Content is fitted to the slide's content band, so counts within these ranges lay out cleanly. Beyond them, split the slide.
+
+| Preset | Comfortable | Hard max | Text budget |
+| --- | --- | --- | --- |
+| `agenda` | 4-6 items | 8 | one line each |
+| `what-to-expect` | 4-5 sections | 7 | label ≤ 30, detail ≤ 60 chars |
+| `process` | 3-5 steps | 6 | label ≤ 22 chars |
+| `process-state-diagram` | 3-5 steps | 6 | label ≤ 22, status ≤ 12 chars |
+| `decision` | 2-3 items | 4 | ≤ 180 chars per card (it must carry what / who proposes / who approves / when / consequence-of-no) |
+| `artifact-map` | 3-6 artifacts | 8 | label ≤ 34, detail ≤ 70 |
+| `concept-artifact` | 2-4 concepts | 5 | callouts ≤ 28 chars |
+| `progress-sidebar` | rail 4-8, cards 2-4 | rail 10 | rail label ≤ 26 chars |
+| `demo-exercise` | 3 panels | 4 | detail ≤ 90 chars |
+| `comparison-table` / `results-table` | 3-6 rows | 8 | cell ≤ 70 chars |
+| `v-model-tool-map` | 5 phases | 5 | label ≤ 18 chars |
+| `image-evidence` | 1-2 images | 2 | caption ≤ 80 chars |
+
+Titles: keep to ~55-58 characters so they set on one line.
 
 ## Global Rules
 

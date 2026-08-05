@@ -10,3 +10,4 @@ generated/**
 
 .DS_Store
 Thumbs.db
+.venv/

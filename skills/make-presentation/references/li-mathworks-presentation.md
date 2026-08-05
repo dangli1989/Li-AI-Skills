@@ -2,6 +2,16 @@
 
 Use this reference only when the user asks for "Li's MathWorks Presentation", "MathWorks style", or a deck that should match Li's prior MathWorks customer, internal, or workshop presentation style.
 
+## Priority Rules
+
+These five rules outrank everything below. When any rule in this file seems to conflict with them, these win:
+
+1. **No invented content.** Every fact on a slide traces to `ground-truth.md`. Missing facts become visible placeholders plus questions to the user.
+2. **Template supplies all form for template-defined elements.** Cover, titles, subtitles, footers, page numbers, confidential markings, and section headers get content only — never new styling, fonts, positions, or replacement shapes.
+3. **Precedence ladder for every visual element:** (1) existing template placeholder on an official layout → (2) documented preset from `li-mathworks-slide-presets.md` → (3) custom shapes only when neither exists, palette-only, justified in `ground-truth.md`. Reuse Li's codified inventions (progress rails, state diagrams, concept-artifact frames) instead of inventing new visual vocabulary.
+4. **Story before style.** Facts → outline → slide intent → speech → only then presets, colors, and animation. Use the arc for the use case in `storytelling.md`.
+5. **Preview and review before done.** Export previews of every slide, inspect them, and run the sense checks before the mechanical checks.
+
 ## Required Questions
 
 Before building:
@@ -47,22 +57,15 @@ Run PowerPoint automation scripts serially. Do not run generation, review, or ex
 
 For HTML output, use `assets/li-mathworks-presentation/html/template.html` and `assets/li-mathworks-presentation/html/styles.css` as the starting point, then adapt the content. The HTML version should resemble the MathWorks template and Li's slide construction style, but it does not need to duplicate PowerPoint internals.
 
-## Style Source Corpus
+## Style System
 
-Li's MathWorks Presentation style is a combined style system learned from the full example corpus, not from one deck. When local examples are available, consider all relevant decks before generating:
-
-- Official template examples: `public.pptx` and `confidential.pptx`.
-- Internal/project workshop examples: `MBD Establishment Workshop.pptx`, `MBD Establishment Workshop - Reorganized.pptx`, and `X_MBD_Workshop.pptx`.
-- Customer technical deep-dive/wrap-up examples: `P13744 2022-09-15 deep-dive.pptx`, `P13744 Pile Driver Path Planning.pptx`, and related customer result decks.
-- MBSE/System Composer training examples: `Session_1.pptx`, `Session_2.pptx`, `Session_3 - Final.pptx`, and `Session_4 - Outline.pptx` from the MBSE source repo when accessible.
-
-Use the corpus this way:
+Li's MathWorks Presentation style is fully codified in this file, `li-mathworks-slide-presets.md`, and the generator scripts. Do not try to re-learn the style from example decks at generation time; the distilled rules here are the source of truth.
 
 - Use the official MathWorks template only as the base chrome, placeholder system, confidential marking, logo, font/theme, and layout source.
-- Use Li's examples to choose content patterns, page roles, color coding, diagram density, animation pacing, and artifact framing.
+- Use the presets to choose content patterns, page roles, color coding, diagram density, animation pacing, and artifact framing — they encode Li's prior workshop, customer, and MBSE training decks.
 - Choose slide patterns because they support the story: training instruction, customer evidence, internal progress review, technical decision-making, or a specific artifact walkthrough.
-- Do not copy source slides unless preserving a customer-approved diagram, complex animation, exact screenshot/evidence artifact, or reviewed technical content. If copied slides visually clash with the new deck, recreate the idea using the official template.
-- Do not let one example dominate the output. Combine patterns by use case and by the user's requested audience.
+- When importing a slide from a prior deck the user provides, import it only to preserve a customer-approved diagram, complex animation, exact screenshot/evidence artifact, or reviewed technical content. If the imported slide visually clashes with the new deck, recreate the idea using the official template.
+- Do not let one prior deck dominate the output. Combine patterns by use case and by the user's requested audience.
 
 ## Template Facts
 
@@ -135,7 +138,7 @@ General technical presentation:
 - For training color-code pages, the source corpus also uses stronger teaching bands: purple for best-practice concepts, light purple for extra best-practice notes, orange for "why", green for "how", blue for "what to do", cyan for demo/exercise, and light red for discussion or risk. Use these only when the deck is explicitly training/workshop and the page type benefits from it.
 - If a fill would match the slide background, use transparent/no fill instead of a same-color fill.
 - Prefer aligned boxes, connector routes, and consistent shape spacing over decorative illustration.
-- Keep slides presenter-led: bigger text, fewer words, and more diagram/image/icon/animation support. Leave details to the speaker.
+- **Density decision rule** (subsumes all density guidance in this file): default to presenter-led sparse slides — bigger text, fewer words, one message, diagram/image/animation support, details left to the speaker. Allow structured dense detail only when the density itself is the content the audience must inspect: an exercise, a recap used as a memory anchor, an evidence/results/comparison table, or a screenshot explanation. Dense slides still keep bold headers, light fills, and emphasis so the point is visible at a glance; text below 14 pt is allowed only inside evidence tables.
 - Do not add fake footers, bottom stripes, logo areas, gray title bands, or other decorations already handled by the MathWorks template.
 - Avoid an entire deck of generic horizontal process cards. Alternate between process maps, evidence screenshots, tables, code/model excerpts, left-rail step reviews, recap pages, and decision pages.
 

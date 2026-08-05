@@ -1,13 +1,30 @@
 param(
     [string]$Profile = 'default',
-    [string]$RuntimeSkillsPath = (Join-Path $env:USERPROFILE '.codex\skills'),
+    [string]$RuntimeSkillsPath = '',
+    [switch]$LegacyCopyMode,
     [switch]$NoBackup
 )
 
 $ErrorActionPreference = 'Stop'
 
+if (-not $LegacyCopyMode) {
+    Write-Host 'Codex uses junction registrations for this repo. Runtime edits already affect the source skills.'
+    Write-Host 'Use -LegacyCopyMode only to import from an older copied Codex runtime.'
+    return
+}
+
 function Get-RepoRoot {
     return (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
+}
+
+function Get-DefaultRuntimeSkillsPath {
+    if ($env:CODEX_HOME) {
+        return (Join-Path $env:CODEX_HOME 'skills')
+    }
+    if ($HOME) {
+        return (Join-Path $HOME '.codex\skills')
+    }
+    throw 'Cannot resolve Codex skills path. Set CODEX_HOME or pass -RuntimeSkillsPath.'
 }
 
 function Get-ProfileSkills {
@@ -26,14 +43,34 @@ function Get-ProfileSkills {
     return $skills
 }
 
+function Get-LinkTarget {
+    param([string]$Path)
+    if (-not (Test-Path -LiteralPath $Path)) {
+        return $null
+    }
+    $item = Get-Item -LiteralPath $Path -Force
+    if (-not $item.LinkType) {
+        return $null
+    }
+    if ($item.Target -is [array]) {
+        return [string]$item.Target[0]
+    }
+    return [string]$item.Target
+}
+
 $repoRoot = Get-RepoRoot
 $skillsRoot = Join-Path $repoRoot 'skills'
+if (-not $RuntimeSkillsPath) {
+    $RuntimeSkillsPath = Get-DefaultRuntimeSkillsPath
+}
+$RuntimeSkillsPath = [System.IO.Path]::GetFullPath($RuntimeSkillsPath)
 $skills = Get-ProfileSkills -RepoRoot $repoRoot -ProfileName $Profile
 
 if (-not (Test-Path -LiteralPath $RuntimeSkillsPath)) {
     throw "Codex runtime skills path not found: $RuntimeSkillsPath"
 }
 
+$backupRoot = $null
 if (-not $NoBackup) {
     $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
     $backupRoot = Join-Path $repoRoot "generated\codex\source-backups\$stamp"
@@ -45,21 +82,25 @@ foreach ($skill in $skills) {
         throw 'Refusing to sync .system skills.'
     }
 
-    $source = Join-Path $RuntimeSkillsPath $skill
-    $target = Join-Path $skillsRoot $skill
-    if (-not (Test-Path -LiteralPath (Join-Path $source 'SKILL.md'))) {
-        throw "Runtime skill missing SKILL.md: $source"
+    $runtimeSource = Join-Path $RuntimeSkillsPath $skill
+    $repoTarget = Join-Path $skillsRoot $skill
+    if (-not (Test-Path -LiteralPath (Join-Path $runtimeSource 'SKILL.md'))) {
+        throw "Runtime skill missing SKILL.md: $runtimeSource"
+    }
+    if (Get-LinkTarget -Path $runtimeSource) {
+        Write-Host "Skipping linked runtime skill: $skill"
+        continue
     }
 
-    if ((Test-Path -LiteralPath $target) -and -not $NoBackup) {
-        Copy-Item -LiteralPath $target -Destination $backupRoot -Recurse -Force
+    if ((Test-Path -LiteralPath $repoTarget) -and -not $NoBackup) {
+        Copy-Item -LiteralPath $repoTarget -Destination $backupRoot -Recurse -Force
     }
 
-    if (Test-Path -LiteralPath $target) {
-        Remove-Item -LiteralPath $target -Recurse -Force
+    if (Test-Path -LiteralPath $repoTarget) {
+        Remove-Item -LiteralPath $repoTarget -Recurse -Force
     }
-    Copy-Item -LiteralPath $source -Destination $skillsRoot -Recurse -Force
-    Write-Host "Synced Codex runtime skill into repo: $skill"
+    Copy-Item -LiteralPath $runtimeSource -Destination $skillsRoot -Recurse -Force
+    Write-Host "Synced legacy Codex runtime skill into repo: $skill"
 }
 
-Write-Host "Codex sync complete. Source repo: $skillsRoot"
+Write-Host "Legacy Codex sync complete. Source repo: $skillsRoot"

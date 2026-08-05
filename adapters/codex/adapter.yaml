@@ -1,8 +1,9 @@
 id: codex
 name: Codex CLI
-runtime_root: "%USERPROFILE%\\.codex\\skills"
+runtime_root: "$CODEX_HOME/skills or $HOME/.codex/skills"
 generated_root: "generated\\codex"
-install_mode: copy
+install_mode: junction
 notes:
   - "Do not overwrite .system skills."
-  - "Only install skills selected by a profile."
+  - "Only register skills selected by a profile."
+  - "Runtime entries should point to source skills in this repo."

@@ -29,9 +29,9 @@ flowchart LR
     Claude["adapters/claude-code"]
   end
 
-  subgraph Runtime["Generated or installed runtime copies"]
-    CodexRuntime["%USERPROFILE%/.codex/skills"]
-    ClaudeRuntime["%USERPROFILE%/.claude/skills"]
+  subgraph Runtime["Runtime registrations or generated copies"]
+    CodexRuntime["Codex skills runtime"]
+    ClaudeRuntime["Claude skills runtime"]
     Generated["generated/*"]
   end
 
@@ -45,7 +45,9 @@ flowchart LR
   Claude --> Generated
 ```
 
-The important rule is that `skills/` is edited by humans; adapters create tool-specific runtime copies.
+The important rule is that `skills/` is edited by humans; adapters create tool-specific runtime registrations or generated copies.
+
+For Codex, runtime entries are junctions or symbolic links back to `skills/<skill-id>`. This keeps one real copy of each skill in the repo. Updating the repo updates the registered skill contents without maintaining duplicate runtime folders.
 
 ## Layout
 
@@ -54,7 +56,7 @@ Li-AI-Skills/
   skills/                 # Source of truth, hand-edited
   adapters/               # Tool-specific install/sync logic
   profiles/               # Which skills are enabled for each workflow
-  generated/              # Disposable generated bundles
+  generated/              # Disposable generated bundles and backups
   tools/                  # Repo-level helper scripts
   docs/                   # Maintenance notes
   tests/                  # Validation and sample prompts
@@ -81,7 +83,7 @@ List skills:
 .\tools\list-skills.ps1
 ```
 
-Install enabled skills into Codex:
+Register enabled skills into Codex:
 
 ```powershell
 .\adapters\codex\install.ps1
@@ -97,4 +99,6 @@ Export/install enabled skills for Claude Code:
 
 Edit skills in this repo first. Then run the adapter install script for the target agent.
 
-If a skill was edited directly in a runtime folder, run that adapter's `sync-from-runtime.ps1` to bring the change back into this repo before continuing.
+For Codex, runtime skills are registrations that point to this repo. Editing a Codex runtime skill edits this repo directly.
+
+For copy-based adapters, if a skill was edited directly in a runtime folder, run that adapter's `sync-from-runtime.ps1` to bring the change back into this repo before continuing.
